@@ -24,7 +24,6 @@ const Header = () => {
                             </Button>
                         </Link>
 
-
                         <DropdownMenu>
                             <DropdownMenuTrigger>
                                 <Button className='cursor-pointer'>
@@ -64,10 +63,7 @@ const Header = () => {
                         <UserButton />
                     </SignedIn>
                 </div>
-
             </nav>
-
-
         </header>
     )
 }
