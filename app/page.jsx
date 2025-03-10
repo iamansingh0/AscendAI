@@ -1,3 +1,4 @@
+import HeroSection from "@/components/hero";
 
 export default function Home() {
   return (
@@ -5,6 +6,7 @@ export default function Home() {
       <div className="grid-background">
 
       </div>
+      <HeroSection />
     </div>
   );
 }
