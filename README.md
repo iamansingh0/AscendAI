@@ -81,6 +81,26 @@ Create a new App in Clerk with the given settings.
 
 Then just follow the steps given by the clerk documentation.
 
+## Configuring Neon for Backend Using PostgreSQL Database
+- [Neon](https://neon.tech/) offers a serverless Postgres database platform for developers. 
+- Instantly branch your data and schema to access isolated DB copies. 
+
+Create project after login:
+<div style="text-align: center;">
+  <img src="public/neon.png" height="260px" width="500px" />
+</div>
+
+### Setup Role and Database
+1. Go to **Overview** tab and click add role.
+2. Give any name and create.
+3. Go to add database, name it and choose the role that you have just created.
+4. Go to **dashboard** tab and click on **Connect Database**.
+5. Choose your newly created database, owner and copy the **connection** string.
+6. Go to **.env** file and paste the URL in ```DATABASE_URL``` variable.
+
+## Configure Inngest
+Inngest
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
