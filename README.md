@@ -99,7 +99,53 @@ Create project after login:
 6. Go to **.env** file and paste the URL in ```DATABASE_URL``` variable.
 
 ## Configure Inngest
-Inngest
+[Inngest](https://www.inngest.com/) is an event-driven durable execution platform that allows you to run fast, reliable code on any platform, without managing queues, infra, or state.
+
+Run these following commands:
+```bash
+npm i inngest
+```
+```bash
+npx inngest-cli@latest dev
+```
+
+It will generate a localhost connection for Inngest server.
+<div style="text-align: center;">
+  <img src="public/inngest-server.png" height="260px" width="500px" />
+</div>
+
+### Create an Inngest [Client](https://www.inngest.com/docs/getting-started/nextjs-quick-start)
+Create a new folder inside lib folder called `inngest`, and then create a new file called `client.js`. <br/>
+Paste the below code into the `client.js`.
+
+```javascript
+import { Inngest } from "inngest";
+
+// Create a client to send and receive events
+export const inngest = new Inngest({ id: "sensai",
+    name: "Sensai",
+ });
+```
+> Later on, we will configure the API for Gemini AI here.
+
+## Setup /api/inngest route
+Create a new folder called `api` inside app folder.
+> We have to build a public api to connect to Inngest.
+Create `inngest` folder inside api and `route.js` file inside inngest.
+```js
+import { serve } from "inngest/next";
+import { inngest } from "../../../inngest/client";
+
+// Create an API that serves zero functions
+export const { GET, POST, PUT } = serve({
+  client: inngest,
+  functions: [
+    /* your functions will be passed here later! */
+  ],
+});
+```
+
+Follow [youtube tutorial](https://youtu.be/UbXpRv5ApKA?list=PLKhlp2qtUcSZBJxjXbHBkE_3h5E31dDiu&t=2973) for more depth on how inngest can be used.
 
 ## Deploy on Vercel
 
