@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# Tech Stack Used
+- NextJS
+- Shadcn UI
+- Clerk
+- Neon
+- Inngest
+- PostgreSQL
+- Prisma
+- Gemini AI
+
 # Development
 
 ## Create a new Next.js project
