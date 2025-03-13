@@ -168,6 +168,23 @@ Next step is to initialize the project with Prisma.
 npx prisma init
 ```
 
+After creating models in **schema.prisma**, need to run this command to create tables in neon database.
+```bash
+npx prisma migrate dev --name create-models
+```
+This command will create tables in the neon database.
+To run queries in the neon database, create a file **prisma.js** inside lib folder.
+```javascript
+import { PrismaClient } from "@prisma/client";
+
+export const db = globalThis.prisma || new PrismaClient();
+if(process.env.NODE_ENV !== 'production'){
+    globalThis.prisma = db;
+}
+```
+
+> **globalThis.prisma**: This global variable ensures that the Prisma client instance is reused across hot reloads during development. Without this, each time your application reloads, a new instance of prisma client would be created, potentially leading to connection issues.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
