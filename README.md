@@ -147,6 +147,17 @@ export const { GET, POST, PUT } = serve({
 
 Follow [youtube tutorial](https://youtu.be/UbXpRv5ApKA?list=PLKhlp2qtUcSZBJxjXbHBkE_3h5E31dDiu&t=2973) for more depth on how inngest can be used.
 
+## Setup Prisma
+Install [Prisma](https://www.prisma.io/) in the project using the following command:
+```bash
+npm i -D prisma
+```
+
+Next step is to initialize the project with Prisma.
+```bash
+npx prisma init
+```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
