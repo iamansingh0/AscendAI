@@ -197,6 +197,16 @@ Install this package using the below command:
 npm i @google/generative-ai
 ```
 
+Now to use GEMINI AI, we need to use these lines of code:
+```javascript
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_AI_API_KEY);
+const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+});
+```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

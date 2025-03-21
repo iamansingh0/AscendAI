@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/header";
@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { Toaster } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] , display:"swap", adjustFontFallback: false});
 
 export const metadata = {
   title: "SensAI | AI Career Coach",
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         <head>
           <link rel="icon" href="/logo.png" sizes="any" />
         </head>
-        <body className={`${inter.className}`}>
+        <body>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
