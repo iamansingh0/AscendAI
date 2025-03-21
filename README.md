@@ -192,6 +192,11 @@ Paste the API Key in .env file
 GEMINI_AI_API_KEY=[API_KEY]
 ```
 
+Install this package using the below command:
+```bash
+npm i @google/generative-ai
+```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
