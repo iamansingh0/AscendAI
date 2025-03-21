@@ -35,9 +35,9 @@ export async function updateUser(data) {
                             industry: data.industry,
                             salaryRanges: [],
                             growthRate: 0,
-                            demandLevel: "Medium",
+                            demandLevel: "MEDIUM",
                             topSkills: [],
-                            marketOutlook: "Neutral",
+                            marketOutlook: "NEUTRAL",
                             keyTrends: [],
                             recommendedSkills: [],
                             nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week
@@ -62,11 +62,11 @@ export async function updateUser(data) {
                 timeout: 10000,
             }
         )
-        return result.user;
+        return {success: true,...result};
         
     } catch (error) {
         console.log('Error updating user & industry: ', error.message);
-        throw new Error('Failed to update user & industry');
+        throw new Error('Failed to update user & industry' + error.message);
     }
 }
 
@@ -103,6 +103,6 @@ export async function getUserOnboardingStatus(data) {
         };
     } catch (error) {
         console.log('Error checking if user is onboarded - ' + error.message);
-        throw new Error('Failed to check user onboarding status');
+        throw new Error('Failed to check user onboarding status' + error.message);
     }
 }
