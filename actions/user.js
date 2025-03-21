@@ -2,26 +2,27 @@
 
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { generateAIInsights } from "./dashboard";
 
 export async function updateUser(data) {
     const { userId } = await auth();
-    if(!userId) {
+    if (!userId) {
         throw new Error("Unauthorized");
     }
 
     const user = await db.user.findUnique({
-        where:{
+        where: {
             clerkUserId: userId,
         }
     })
 
-    if(!user) {
+    if (!user) {
         throw new Error("User not found");
     }
 
     try {
         const result = await db.$transaction(
-            async(tx) => {
+            async (tx) => {
                 // find if the industry exists
                 let industryInsight = await tx.industryInsight.findUnique({
                     where: {
@@ -29,24 +30,19 @@ export async function updateUser(data) {
                     },
                 })
                 // If Industry does not exist, create it with default values - with replace it with AI later
-                if(!industryInsight) {
-                    industryInsight = await tx.industryInsight.create({
+                if (!industryInsight) {
+                    const insights = await generateAIInsights(data.industry);
+                    industryInsight = await db.industryInsight.create({
                         data: {
                             industry: data.industry,
-                            salaryRanges: [],
-                            growthRate: 0,
-                            demandLevel: "MEDIUM",
-                            topSkills: [],
-                            marketOutlook: "NEUTRAL",
-                            keyTrends: [],
-                            recommendedSkills: [],
+                            ...insights,
                             nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week
-                        },
+                        }
                     })
                 }
                 // update the user
-                const updatedUser =  await tx.user.update({
-                    where:{
+                const updatedUser = await tx.user.update({
+                    where: {
                         id: user.id,
                     },
                     data: {
@@ -56,14 +52,14 @@ export async function updateUser(data) {
                         skills: data.skills,
                     }
                 })
-                return {updatedUser, industryInsight};
-            }, 
+                return { updatedUser, industryInsight };
+            },
             {
                 timeout: 10000,
             }
         )
-        return {success: true,...result};
-        
+        return { success: true, ...result };
+
     } catch (error) {
         console.log('Error updating user & industry: ', error.message);
         throw new Error('Failed to update user & industry' + error.message);
@@ -73,24 +69,24 @@ export async function updateUser(data) {
 export async function getUserOnboardingStatus(data) {
     const { userId } = await auth();
     console.log(userId)
-    if(!userId) {
+    if (!userId) {
         throw new Error("Unauthorized");
     }
 
     const user = await db.user.findUnique({
-        where:{
+        where: {
             clerkUserId: userId,
         }
     })
     console.log(user)
 
-    if(!user) {
+    if (!user) {
         throw new Error("User not found");
     }
 
     try {
         const user = await db.user.findUnique({
-            where:{
+            where: {
                 clerkUserId: userId,
             },
             select: {
