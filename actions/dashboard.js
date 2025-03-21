@@ -47,6 +47,9 @@ export async function getIndustryInsights() {
     const user = await db.user.findUnique({
         where: {
             clerkUserId: userId,
+        },
+        include: {
+            industryInsight: true,
         }
     })
 
@@ -54,7 +57,7 @@ export async function getIndustryInsights() {
         throw new Error("User not found");
     }
 
-    if(!user.IndustryInsight){
+    if(!user.industryInsight){
         const insights = await generateAIInsights(user.industry);
         const industryInsight = await db.industryInsight.create({
             data: {
@@ -66,6 +69,6 @@ export async function getIndustryInsights() {
 
         return industryInsight;
     }
-
+    console.log(user.industryInsight)
     return user.industryInsight;
 }
