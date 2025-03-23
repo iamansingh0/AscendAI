@@ -9,7 +9,7 @@ const InterviewPage = async () => {
     <div>
       <div>
         <h1 className='font-bold text-6xl gradient-title mb-5'>Interview Preparation</h1>
-        <div>
+        <div className='space-y-6'>
           <StatsCards assessments={assessments}/>
           <PerformanceChart assessments={assessments}/>
           <QuizList assessments={assessments}/>
