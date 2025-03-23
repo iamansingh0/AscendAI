@@ -13,7 +13,7 @@ const StatsCards = ({ assessments }) => {
 
   const getLatestAssessment = () => {
     if (!assessments?.length) return null;
-    return assessments[0].quizScore.toFixed(1);
+    return assessments[assessments.length-1];
   };
 
   const getTotalQuestions = () => {
@@ -58,7 +58,7 @@ const StatsCards = ({ assessments }) => {
           <Trophy className={`w-4 h-4 text-muted-foreground`} />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{getLatestAssessment()}%</div>
+          <div className="text-2xl font-bold">{getLatestAssessment()?.quizScore.toFixed(1)}%</div>
           <p className="text-xs text-muted-foreground">
             Most recent quiz
           </p>
