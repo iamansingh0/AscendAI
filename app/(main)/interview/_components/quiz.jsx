@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import QuizResult from "./quiz-result";
 
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -79,8 +80,25 @@ const Quiz = () => {
     }
   };
 
+  const startNewQuiz = () => {
+    setCurrentQuestion(0);
+    setAnswers([]);
+    setShowExplanation(false);
+    generateQuizFn();
+    setResultData(null);
+  }
+
   if (generatingQuiz) {
     return <BarLoader className="mt-4" width={"100%"} color="gray" />;
+  }
+
+  // show results if quiz is completed
+  if(resultData) {
+    return (
+      <div className="mx-2">
+        <QuizResult result={resultData} onStartNew={startNewQuiz}/>
+      </div>
+    )
   }
 
   if (!quizData) {
@@ -156,7 +174,7 @@ const Quiz = () => {
 
         <Button
           onClick={handleNext}
-          variant="outline"
+          variant="primary"
           disabled={!answers[currentQuestion] || savingResult}
           className="cursor-pointer ml-auto"
         >
