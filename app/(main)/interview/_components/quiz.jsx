@@ -174,9 +174,9 @@ const Quiz = () => {
 
         <Button
           onClick={handleNext}
-          variant="primary"
+          variant={'outline'}
           disabled={!answers[currentQuestion] || savingResult}
-          className="cursor-pointer ml-auto"
+          className="cursor-pointer ml-auto hover:bg-amber-50 hover:text-black"
         >
           {savingResult && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {currentQuestion === quizData.length - 1 ? "Submit Quiz" : "Next"}
