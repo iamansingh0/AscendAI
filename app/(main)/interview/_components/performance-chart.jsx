@@ -67,7 +67,7 @@ const PerformanceChart = ({ assessments }) => {
               <Line
                 type="monotone"
                 dataKey="score"
-                stroke="#8884d8"
+                stroke="#fff"
                 strokeWidth={2}
               />
             </LineChart>
