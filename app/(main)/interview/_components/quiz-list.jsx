@@ -90,4 +90,3 @@ const QuizList = ({ assessments }) => {
 };
 
 export default QuizList;
-// https://youtu.be/UbXpRv5ApKA?t=14369
