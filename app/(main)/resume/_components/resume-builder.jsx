@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Download, Edit, Monitor, Save } from "lucide-react";
+import {
+  AlertTriangle,
+  Download,
+  Edit,
+  Loader2,
+  Monitor,
+  Save,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -15,12 +22,16 @@ import EntryForm from "./entry-form";
 import { useUser } from "@clerk/nextjs";
 import { entriesToMarkdown } from "@/app/lib/helper";
 import MDEditor from "@uiw/react-md-editor";
+import html2pdf from "html2pdf.js/dist/html2pdf.min.js";
+import { useRef } from "react";
 
 const ResumeBuilder = ({ initialContent }) => {
   const [activeTab, setActiveTab] = useState("edit");
   const [resumeMode, setResumeMode] = useState("preview");
-  const [previewContent, setPreviewContent] = useState(initialContent)
+  const [previewContent, setPreviewContent] = useState(initialContent);
   const { user } = useUser();
+  const [isGenerating, setIsGenerating] = useState(false);
+  const contentRef = useRef(null);
 
   const {
     control,
@@ -54,25 +65,26 @@ const ResumeBuilder = ({ initialContent }) => {
   }, [initialContent]);
 
   useEffect(() => {
-    if(activeTab === "edit") {
+    if (activeTab === "edit") {
       const newContent = getCombinedContent();
       setPreviewContent(newContent ? newContent : initialContent);
     }
-  }, [formValues, activeTab])
+  }, [formValues, activeTab]);
 
   const getContactMarkdown = () => {
     const { contactInfo } = formValues;
-    const parts = []
-    if(contactInfo.email) parts.push(`📧 ${contactInfo.email}`);
-    if(contactInfo.mobile) parts.push(`📱 ${contactInfo.mobile}`);
-    if(contactInfo.linkedin) parts.push(`💼 [LinkedIn](${contactInfo.linkedin})`);
-    if(contactInfo.x) parts.push(`🐦 [X](${contactInfo.x})`);
+    const parts = [];
+    if (contactInfo.email) parts.push(`📧 ${contactInfo.email}`);
+    if (contactInfo.mobile) parts.push(`📱 ${contactInfo.mobile}`);
+    if (contactInfo.linkedin)
+      parts.push(`💼 [LinkedIn](${contactInfo.linkedin})`);
+    if (contactInfo.x) parts.push(`🐦 [X](${contactInfo.x})`);
 
-    return parts.length > 0 
+    return parts.length > 0
       ? `## <div align="center">${user.fullName}</div>
-      \n\n<div align="center">\n\n${parts.join(" | ")}\n\n</div>` 
+      \n\n<div align="center">\n\n${parts.join(" | ")}\n\n</div>`
       : "";
-  }
+  };
 
   const getCombinedContent = () => {
     const { summary, skills, experience, education, projects } = formValues;
@@ -85,9 +97,32 @@ const ResumeBuilder = ({ initialContent }) => {
       entriesToMarkdown(education, "Education"),
       entriesToMarkdown(projects, "Projects"),
     ]
-    .filter(Boolean)
-    .join("\n\n");
-  }
+      .filter(Boolean)
+      .join("\n\n");
+  };
+
+  const generatePDF = async () => {
+    setIsGenerating(true);
+    try {
+      // const element = document.getElementById("resume-pdf");
+      // console.log(`element: ${element}`);
+      const content = contentRef.current;
+      console.log(content)
+      const opt = {
+        margin: [15, 15],
+        filename: "resume.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      };
+
+      await html2pdf().set(opt).from(content).save();
+    } catch (error) {
+      console.log("PDF generation error: ", error.message);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const onSubmit = async (data) => {};
 
@@ -102,9 +137,22 @@ const ResumeBuilder = ({ initialContent }) => {
             <Save className="h-4 w-4" />
             Save
           </Button>
-          <Button className="cursor-pointer">
-            <Download className="h-4 w-4" />
-            Download
+          <Button
+            className="cursor-pointer"
+            onClick={generatePDF}
+            disabled={isGenerating}
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" />
+                Download
+              </>
+            )}
           </Button>
         </div>
       </div>
@@ -282,12 +330,14 @@ const ResumeBuilder = ({ initialContent }) => {
           </form>
         </TabsContent>
         <TabsContent value="preview">
-          <Button 
-            type="button" 
-            variant="link" 
+          <Button
+            type="button"
+            variant="link"
             className="mb-2 cursor-pointer"
-            onClick={() => setResumeMode(resumeMode === "preview" ? "edit" : "preview")}
-        >
+            onClick={() =>
+              setResumeMode(resumeMode === "preview" ? "edit" : "preview")
+            }
+          >
             {resumeMode === "preview" ? (
               <>
                 <Edit className="h-4 w-4" />
@@ -303,16 +353,15 @@ const ResumeBuilder = ({ initialContent }) => {
 
           {resumeMode === "edit" && (
             <div className="flex p-3 gap-2 border-2 items-center border-yellow-600 text-yellow-600 rounded mb-2">
-                <AlertTriangle className="h-5 w-5" />
-                <span className="text-sm">
-                    You will lose edited markdown if you update the form data.
-                </span>
+              <AlertTriangle className="h-5 w-5" />
+              <span className="text-sm">
+                You will lose edited markdown if you update the form data.
+              </span>
             </div>
-            
           )}
 
           <div className="border rounded-lg">
-            <MDEditor 
+            <MDEditor
               value={previewContent}
               onChange={setPreviewContent}
               height={800}
@@ -320,13 +369,13 @@ const ResumeBuilder = ({ initialContent }) => {
             />
           </div>
 
-          <div className="hidden">
+          <div className="hidden" ref={contentRef}>
             <div id="resume-pdf">
-              <MDEditor.Markdown 
+              <MDEditor.Markdown
                 source={previewContent}
                 style={{
                   background: "white",
-                  color: "black"
+                  color: "black",
                 }}
               />
             </div>
