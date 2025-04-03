@@ -9,7 +9,7 @@ import { Toaster } from "sonner";
 // const inter = Inter({ subsets: ["latin"] , display:"swap", adjustFontFallback: false});
 
 export const metadata = {
-  title: "SensAI | AI Career Coach",
+  title: "AscendAI | AI Career Coach",
   description: "",
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
     }}>
       <html lang="en" suppressHydrationWarning>
         <head>
-          <link rel="icon" href="/logo.png" sizes="any" />
+          <link rel="icon" href="/a3.png" sizes="any" />
         </head>
         <body>
           <ThemeProvider
