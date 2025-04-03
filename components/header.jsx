@@ -2,7 +2,7 @@ import React from 'react'
 import { SignedOut, SignedIn, SignInButton, SignUpButton, UserButton, Bu } from '@clerk/nextjs'
 import { Button } from './ui/button'
 import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuContent } from './ui/dropdown-menu'
-import { ChevronDown, FileText, GraduationCap, PenBox, StarsIcon } from 'lucide-react'
+import { ChevronDown, FileText, GraduationCap, PenBox, Route, StarsIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { LayoutDashboard } from 'lucide-react'
@@ -51,6 +51,12 @@ const Header = async () => {
                                     <Link href={'/interview'} className='flex items-center gap-2 cursor-pointer' >
                                         <GraduationCap className='h-4 w-4' />
                                         <span>Interview Prep</span>
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <Link href={'/roadmap'} className='flex items-center gap-2 cursor-pointer' >
+                                        <Route className='h-4 w-4' />
+                                        <span>Roadmap</span>
                                     </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
