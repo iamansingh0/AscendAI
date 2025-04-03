@@ -1,4 +1,5 @@
-// import { Inter } from "next/font/google";
+import { Inter } from "next/font/google";
+// import { Alice } from "next/font/google"
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/header";
@@ -6,7 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { Toaster } from "sonner";
 
-// const inter = Inter({ subsets: ["latin"] , display:"swap", adjustFontFallback: false});
+const inter = Inter({ subsets: ["latin"] , display:"swap", adjustFontFallback: false});
+// const alice = Alice({ subsets: ["latin"], display: "swap", weight: "400" });
 
 export const metadata = {
   title: "AscendAI | AI Career Coach",
@@ -18,7 +20,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider appearance={{
         baseTheme: dark
     }}>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning className={inter.className}>
         <head>
           <link rel="icon" href="/a3.png" sizes="any" />
         </head>
