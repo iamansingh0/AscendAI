@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
     }}>
       <html lang="en" suppressHydrationWarning className={inter.className}>
         <head>
-          <link rel="icon" href="/a3.png" sizes="any" />
+          <link rel="icon" href="/mini.png" sizes="any" />
         </head>
         <body>
           <ThemeProvider
