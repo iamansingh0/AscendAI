@@ -132,8 +132,8 @@ Paste the below code into the `client.js`.
 import { Inngest } from "inngest";
 
 // Create a client to send and receive events
-export const inngest = new Inngest({ id: "sensai",
-    name: "Sensai",
+export const inngest = new Inngest({ id: "ascend-ai",
+    name: "AscendAI",
  });
 ```
 > Later on, we will configure the API for Gemini AI here.
