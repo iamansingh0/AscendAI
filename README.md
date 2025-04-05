@@ -84,10 +84,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 [Clerk](https://clerk.com/) gives us access to prebuilt components, React hooks, and helpers to make user authentication easier.
 <br/>
 
-Create a new App in Clerk with the given settings.
-<div style="text-align: center;">
-  <img src="public/image.png" height="280px" width="500px" />
-</div>
+Create a new App in Clerk.
 
 Then just follow the steps given by the clerk documentation.
 
@@ -95,10 +92,7 @@ Then just follow the steps given by the clerk documentation.
 - [Neon](https://neon.tech/) offers a serverless Postgres database platform for developers. 
 - Instantly branch your data and schema to access isolated DB copies. 
 
-Create project after login:
-<div style="text-align: center;">
-  <img src="public/neon.png" height="260px" width="500px" />
-</div>
+Create project after login.
 
 ### Setup Role and Database
 1. Go to **Overview** tab and click add role.
