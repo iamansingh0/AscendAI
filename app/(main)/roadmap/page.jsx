@@ -44,19 +44,21 @@ const RoadmapPage = () => {
       toast.error(error.message || "Failed to generate roadmap");
     }
   };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-4 sm:px-6 lg:px-8 py-6">
       <Card>
         <CardHeader>
-          <CardTitle>Create a Career Roadmap</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-lg sm:text-xl lg:text-2xl">
+            Create a Career Roadmap
+          </CardTitle>
+          <CardDescription className="text-sm sm:text-base">
             Create a roadmap for your dream career.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Form fields remain the same */}
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="industry">Industry</Label>
                 <Input
@@ -87,7 +89,7 @@ const RoadmapPage = () => {
             </div>
 
             <div className="flex justify-end">
-              <Button type="submit">
+              <Button type="submit" className="w-full sm:w-auto">
                 {generating ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -105,7 +107,9 @@ const RoadmapPage = () => {
         </CardContent>
       </Card>
       {createdRoadmap && (
-        <CareerRoadmap roadmapData={createdRoadmap} />
+        <div className="mt-6">
+          <CareerRoadmap roadmapData={createdRoadmap} />
+        </div>
       )}
     </div>
   );

@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { Toaster } from "sonner";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] , display:"swap", adjustFontFallback: false});
 // const alice = Alice({ subsets: ["latin"], display: "swap", weight: "400" });
@@ -35,11 +36,7 @@ export default function RootLayout({ children }) {
             <main className="min-h-screen">{children}</main>
             <Toaster richColors />
 
-            <footer className="bg-muted/50 py-12">
-              <div className="container mx-auto px-4 text-center text-gray-200">
-                <p>Made with NextJs</p>
-              </div>
-            </footer>
+            <Footer />
           </ThemeProvider>
         </body>
       </html>
