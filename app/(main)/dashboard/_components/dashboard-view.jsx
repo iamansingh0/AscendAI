@@ -6,7 +6,7 @@ import {
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { format, formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -26,8 +26,14 @@ import {
   Bar,
   ResponsiveContainer,
 } from "recharts";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import UpdateIndustryForm from "./update-industry-form";
+import { industries } from "@/data/industries";
 
-const DashboardView = ({ insights }) => {
+const DashboardView = async ({ insights }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  console.log(insights)
   const salaryData = insights.salaryRanges.map((range) => ({
     name: range.role,
     min: range.min / 1000,
@@ -82,11 +88,30 @@ const DashboardView = ({ insights }) => {
     { addSuffix: true }
   );
 
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <Badge variant="outline">Last updated: {lastUpdatedDate}</Badge>
+        <Button
+          onClick={() => setIsDialogOpen(true)}
+        >
+          Update Industry
+        </Button>
       </div>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className={'max-w-3xl max-h-[90vh] overflow-y-auto'}>
+          <DialogHeader>
+            <DialogTitle className="text-center">Update Industry</DialogTitle>
+            <DialogClose />
+          </DialogHeader>
+          <UpdateIndustryForm
+            curIndustry={insights.industry}
+            industries={industries}
+            onCloseDialog={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
